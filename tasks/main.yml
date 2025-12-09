@@ -1,0 +1,15 @@
+---
+- name: Set facts
+  ansible.builtin.set_fact:
+    local_secrets_env_file: "{{ [ playbook_dir, local_docker_directory, 'secrets.env.local' ] | path_join }}"
+
+- name: Check if secrets.env.local exists
+  ansible.builtin.stat:
+    path: '{{ local_secrets_env_file }}'
+  register: local_secrets_env_file_stat
+
+- name: Decrypt local secrets.env
+  ansible.builtin.command: >
+    ansible-vault decrypt --vault-password-file {{ vault_password_file }} {{ local_secrets_env_file }}
+    --output {{ [playbook_dir, local_docker_directory, 'docker.secrets.env'] | path_join }}
+  when: local_secrets_env_file_stat.stat.exists

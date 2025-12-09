@@ -1,0 +1,3 @@
+---
+local_docker_directory: ../docker
+vault_password_file: '~/.config/ub-ansible-deploy/.vault_password'
