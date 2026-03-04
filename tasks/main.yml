@@ -11,5 +11,5 @@
 - name: Decrypt local secrets.env
   ansible.builtin.command: >
     ansible-vault decrypt --vault-password-file {{ vault_password_file }} {{ local_secrets_env_file }}
-    --output {{ [playbook_dir, local_docker_directory, 'docker.secrets.env'] | path_join }}
+    --output {{ [playbook_dir, local_docker_directory, 'secrets.env'] | path_join }}
   when: local_secrets_env_file_stat.stat.exists
